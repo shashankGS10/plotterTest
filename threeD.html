@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PT</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+    <div id="myDiv"></div>
+</body>
+<script type="text/javascript">
+    function sinc(p) {
+        if (p === 0) {
+            return 1;
+        } else {
+            var res = (Math.sin(p) / p);
+            return res;
+        }
+    }
+    var z_data = [];
+
+    function zgen() {
+        for (var i = -20; i < 20; i++) {
+            var tmp = []
+            for (var j = -20; j < 20; j++) {
+                var r = Math.sqrt((i ** 2) + (j ** 2));
+                var tt = sinc(r);
+                tmp.push(tt);
+            }
+            z_data.push(tmp);
+        }
+    }
+    zgen();
+    console.log(JSON.stringify(z_data));
+
+    var data = [{
+        z: z_data,
+        type: 'surface'
+    }];
+
+    var layout = {
+        title: 'Mt Bruno Elevation',
+        autosize: false,
+        width: 500,
+        height: 500,
+        margin: {
+            l: 65,
+            r: 50,
+            b: 65,
+            t: 90,
+        }
+    };
+    Plotly.newPlot('myDiv', data, layout);
+</script>
+
+</html>
